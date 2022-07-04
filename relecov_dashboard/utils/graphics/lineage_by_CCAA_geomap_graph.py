@@ -133,14 +133,19 @@ def plot_geomap(lineage):
     ldata = set_dataframe_geo_plot(preprocess_json_data_with_csv(json_data, csv_data), lineage)
 
     fig = px.choropleth_mapbox(ldata, geojson=geojson_data, locations='ID', color='Count',
-                               color_continuous_scale="Viridis",
+                               color_continuous_scale="Turbo",
                                range_color=(0, ldata.Count.max()),
                                mapbox_style="carto-positron",
-                               zoom=5, center={"lat": 35.9, "lon": -5.3},
+                               zoom=4.7, center={"lat": 35.9, "lon": -5.3},
                                opacity=0.5,
-                               labels={'Count': 'Number of samples'}
+                               labels={'CCAA': 'Comunidad autónoma',
+                                       'Count': 'Number of samples'}
                                )
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    fig.update_layout(margin={"r": 40, "t": 50, "l": 40, "b": 50},
+                      title="<b>Cases distribution for " + lineage + " lineage per CCAA</b>",
+                      width=1500,
+                      height=900,
+                      )
     fig.show()
 
     app = DjangoDash("geomap_plot")
